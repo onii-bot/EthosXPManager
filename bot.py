@@ -84,7 +84,8 @@ async def new_day():
     target = collection.find_one({"_id": "target"})['time']
     collection.delete_many({})
     target = target + 86400
-    collection.update_one({"_id": "target"}, {"$set": {"time": target}})
+    post = {"_id": "target", "time": target}
+    collection.insert_one(post)
     guild = client.get_guild(ethos_dc)
     channel = guild.get_channel(ethos_reaction_ch)
     await channel.purge(limit=1)
@@ -102,4 +103,3 @@ async def taskcheck():
 
 
 client.run(os.environ['DISCORD_TOKEN'])
-
