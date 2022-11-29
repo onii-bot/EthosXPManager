@@ -100,7 +100,7 @@ async def new_day():
     # Embed
     embed = discord.Embed(colour=discord.Colour.blue())
     embed.add_field(name="Daily XPs", value="React to this text with 👾 to claim your daily xp", inline=True)
-    msg = await channel.send("<@>", embed=embed)
+    msg = await channel.send("<@&1047154419696926783>", embed=embed)
     emoji = "👾"
     await msg.add_reaction(emoji)
 
