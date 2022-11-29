@@ -20,8 +20,8 @@ collection = db["ethos_xp_data"]
 ethos_customized_bot_ch = 1046353571001667617
 ethos_dc = 1039314094081183824
 ethos_reaction_ch = 1046331199628509204
-ethos_log_ch = 1046331887964143667
-ethos_bot_commands_ch = 1041487596481683499
+ethos_priv_log_ch = 1046331887964143667
+ethos_pub_logs_ch = 1047132047275208745
 ethos_xp_manager = 1046367188421976074
 
 
@@ -42,12 +42,12 @@ async def on_raw_reaction_add(payload):
                                 post = {"_id": payload.member.id}
                                 collection.insert_one(post)
                                 await xp_giver(payload.member.id)
-                                channelbot = client.get_channel(ethos_log_ch)
+                                channelbot = client.get_channel(ethos_pub_logs_ch)
                                 embed = discord.Embed(colour=discord.Colour.green())
                                 embed.set_author(name=f"You received 200xp 👾")
                                 await channelbot.send(f"{payload.member.mention}", embed=embed)
                         else:
-                            channelbot = client.get_channel(ethos_log_ch)
+                            channelbot = client.get_channel(ethos_pub_logs_ch)
                             embed = discord.Embed(colour=discord.Colour.red())
                             embed.set_author(name=f"You already claimed your daily XP 👾")
                             await channelbot.send(f"{payload.member.mention}", embed=embed)
@@ -64,7 +64,7 @@ async def on_ready():
 # Functions
 async def xp_giver(user_id):
     word = f"!give-xp <@{user_id}> 200"
-    channel_id = ethos_log_ch
+    channel_id = ethos_priv_log_ch
     url = f"https://discord.com/api/v9/channels/{channel_id}/messages"
     payload = {
         'content': word
