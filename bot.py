@@ -41,13 +41,14 @@ async def on_raw_reaction_add(payload):
                             if payload.member.id != ethos_xp_manager:
                                 post = {"_id": payload.member.id}
                                 collection.insert_one(post)
-                                xp_pass = discord.utils.get(payload.guild.roles, id=1047154419696926783)
-                                queen = discord.utils.get(payload.guild.roles, id=1045274556379701259)
-                                king = discord.utils.get(payload.guild.roles, id=1045274429141299250)
-                                if king in payload.author.roles or queen in payload.author.roles:
+                                guild = client.get_guild(payload.guild_id)
+                                xp_pass = discord.utils.get(guild.roles, id=1047154419696926783)
+                                queen = discord.utils.get(guild.roles, id=1045274556379701259)
+                                king = discord.utils.get(guild.roles, id=1045274429141299250)
+                                if king in payload.member.roles or queen in payload.member.roles:
                                     xp = 500
                                     await xp_giver(payload.member.id, xp)
-                                elif xp_pass in payload.author.roles:
+                                elif xp_pass in payload.member.roles:
                                     xp = 250
                                     await xp_giver(payload.member.id, xp)
                                 else:
@@ -123,3 +124,4 @@ async def taskcheck():
 
 
 client.run(os.environ['DISCORD_TOKEN'])
+
