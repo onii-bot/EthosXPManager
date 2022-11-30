@@ -41,10 +41,21 @@ async def on_raw_reaction_add(payload):
                             if payload.member.id != ethos_xp_manager:
                                 post = {"_id": payload.member.id}
                                 collection.insert_one(post)
-                                await xp_giver(payload.member.id)
+                                xp_pass = discord.utils.get(payload.guild.roles, id=1047154419696926783)
+                                queen = discord.utils.get(payload.guild.roles, id=1045274556379701259)
+                                king = discord.utils.get(payload.guild.roles, id=1045274429141299250)
+                                if king in payload.author.roles or queen in payload.author.roles:
+                                    xp = 500
+                                    await xp_giver(payload.member.id, xp)
+                                elif xp_pass in payload.author.roles:
+                                    xp = 250
+                                    await xp_giver(payload.member.id, xp)
+                                else:
+                                    xp = 100
+                                    await xp_giver(payload.member.id, xp)
                                 channelbot = client.get_channel(ethos_pub_logs_ch)
                                 embed = discord.Embed(colour=discord.Colour.green())
-                                embed.set_author(name=f"You received 200xp 👾")
+                                embed.set_author(name=f"You received {xp}xp 👾")
                                 await channelbot.send(f"{payload.member.mention}", embed=embed)
                         else:
                             channelbot = client.get_channel(ethos_pub_logs_ch)
@@ -62,8 +73,8 @@ async def on_ready():
 
 
 # Functions
-async def xp_giver(user_id):
-    word = f"!give-xp <@{user_id}> 200"
+async def xp_giver(user_id, xp):
+    word = f"!give-xp <@{user_id}> {xp}"
     channel_id = ethos_priv_log_ch
     url = f"https://discord.com/api/v9/channels/{channel_id}/messages"
     payload = {
