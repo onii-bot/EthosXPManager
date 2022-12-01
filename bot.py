@@ -46,13 +46,13 @@ async def on_raw_reaction_add(payload):
                                 queen = discord.utils.get(guild.roles, id=1045274556379701259)
                                 king = discord.utils.get(guild.roles, id=1045274429141299250)
                                 if king in payload.member.roles or queen in payload.member.roles:
-                                    xp = 500
+                                    xp = 150
                                     await xp_giver(payload.member.id, xp)
                                 elif xp_pass in payload.member.roles:
-                                    xp = 250
+                                    xp = 100
                                     await xp_giver(payload.member.id, xp)
                                 else:
-                                    xp = 100
+                                    xp = 50
                                     await xp_giver(payload.member.id, xp)
                                 channelbot = client.get_channel(ethos_pub_logs_ch)
                                 embed = discord.Embed(colour=discord.Colour.green())
