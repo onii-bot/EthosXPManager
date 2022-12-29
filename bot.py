@@ -24,6 +24,11 @@ ethos_priv_log_ch = 1046331887964143667
 ethos_pub_logs_ch = 1047132047275208745
 ethos_xp_manager = 1046367188421976074
 
+# Roles
+king_id = 1054446960100245514
+queen_id = 1054446386663395380
+xp_pass_id = 1047154419696926783
+
 
 # Events
 @client.event
@@ -42,9 +47,9 @@ async def on_raw_reaction_add(payload):
                                 post = {"_id": payload.member.id}
                                 collection.insert_one(post)
                                 guild = client.get_guild(payload.guild_id)
-                                xp_pass = discord.utils.get(guild.roles, id=1047154419696926783)
-                                queen = discord.utils.get(guild.roles, id=1045274556379701259)
-                                king = discord.utils.get(guild.roles, id=1045274429141299250)
+                                xp_pass = discord.utils.get(guild.roles, id=xp_pass_id)
+                                queen = discord.utils.get(guild.roles, id=queen_id)
+                                king = discord.utils.get(guild.roles, id=king_id)
                                 if king in payload.member.roles or queen in payload.member.roles:
                                     xp = 150
                                     await xp_giver(payload.member.id, xp)
@@ -112,7 +117,7 @@ async def new_day():
     # Embed
     embed = discord.Embed(colour=discord.Colour.blue())
     embed.add_field(name="Daily XPs", value="React to this text with 👾 to claim your daily xp", inline=True)
-    msg = await channel.send("<@&1047154419696926783>", embed=embed)
+    msg = await channel.send(embed=embed)
     emoji = "👾"
     await msg.add_reaction(emoji)
 
